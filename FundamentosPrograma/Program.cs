@@ -6,11 +6,12 @@ namespace FundamentosPrograma
     {
         static void Main(string[] args)
         {
+            //PruebaGit
             //NumeroPositivoNegativo();
             //MayorTresNumero();
             //DiaNacimiento();
             //ConjeturaCollatz();
-            //NumerosPares();
+            //NumerosPares(); 
             SumarNumeros();
         }
 
