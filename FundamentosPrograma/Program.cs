@@ -1,20 +1,253 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Text;
+using System.Collections.Generic;
+using FundamentosPrograma.Models;
+using FundamentosPrograma.Helpers;
 
 namespace FundamentosPrograma
 {
+    enum TipoChar {Letras, Numeros, Simbolos}
     class Program
     {
         static void Main(string[] args)
         {
-            //PruebaGit
-            //NumeroPositivoNegativo();
-            //MayorTresNumero();
-            //DiaNacimiento();
-            //ConjeturaCollatz();
-            //NumerosPares(); 
-            SumarNumeros();
+
+            Coche car = new Coche();
+            car.Marca = "Seat";
+            car.Modelo = "Leon";
+            int opcion = -1;
+            while (opcion != 6)
+            {
+                MostrarMenuCoche();
+                opcion = int.Parse(Console.ReadLine());
+                if (opcion == 1)
+                {
+                    car.Arrancar();
+                }
+                else if (opcion == 2)
+                {
+                    car.Acelerar();
+                }
+                else if (opcion == 3)
+                {
+                    car.frenar();
+                }
+                else if (opcion == 4)
+                {
+                    car.Girar();
+                }
+                else if (opcion == 5)
+                {
+                    Console.WriteLine("Aceleración");
+                    int aceleracion = int.Parse(Console.ReadLine());
+                    car.Acelerar(aceleracion);
+                }
+                else if (opcion == 6)
+                {
+                    Console.WriteLine("Hasta luego");
+                }
+                else
+                {
+                    Console.WriteLine("Opción incorrecta");
+                }
+                Console.WriteLine(car.ToString());
+            }
+            Console.WriteLine("Fin de programa");
         }
 
+        static void MostrarMenuCoche()
+        {
+            Console.WriteLine("-----------MENU-----------");
+            Console.WriteLine("1.- Arrancar");
+            Console.WriteLine("2.- Acelerar");
+            Console.WriteLine("3.- Frenar");
+            Console.WriteLine("4.- Girar");
+            Console.WriteLine("5.- Acelerar personalizado");
+            Console.WriteLine("6.- Salir");
+            Console.WriteLine("Seleccione una opción");
+        }
+
+
+        static void EjemploMeses()
+        {
+            HelperMeses helper = new HelperMeses();
+            foreach (TemperaturaMes mes in helper.Meses)
+            {
+                Console.WriteLine(mes.Mes + ", Maxima: "
+                    + mes.Maxima + ", Minima: "
+                    + mes.Minima + ", Media Mensual: "
+                    + mes.GetMedia());
+            }
+
+            Console.WriteLine("------DATOS ANUALES------");
+            Console.WriteLine("Maxima Anual " + helper.GetMaximaAnual());
+            Console.WriteLine("Minima Anual " + helper.GetMinimaAnual());
+            Console.WriteLine("Media Anual " + helper.GetMediaAnual());
+
+            Console.WriteLine("fin del programa");
+
+        }
+        static void EvaluarNumerosWhile()
+        {
+            Console.WriteLine("Introduce un número: ");
+            string dato = Console.ReadLine();
+            int numero = int.Parse(dato);
+
+            while (dato != "n" && dato != "N")
+            {
+                if (numero > 0)
+                {
+                    Console.WriteLine("POSITIVO");
+                }else if (numero < 0)
+                {
+                    Console.WriteLine("NEGATIVO");
+                }
+                else
+                {
+                    Console.WriteLine("ZERO");
+                }
+                Console.WriteLine("¿Desea continuar? (s/n)");
+                dato = Console.ReadLine();
+                
+                if (dato!= "n" && dato != "N")
+                {
+                    Console.WriteLine("Introduce otro número: ");
+                    dato = Console.ReadLine();
+                    numero = int.Parse(dato);
+                }
+            }
+
+        }
+        static void EjemploViernes()
+        {
+            string nombre = "";
+
+            List<String> nombres = new List<string>();
+
+            while (nombre != "n" && nombre != "N")
+            {
+                Console.WriteLine("Introduzca un nombre: ");
+                nombre = Console.ReadLine();
+                if (nombre != "n" && nombre != "N")
+                {
+                    nombres.Add(nombre);
+                }
+
+                foreach (String name in nombres)
+                {
+                        Console.WriteLine(name);
+                }                                
+            }
+        }
+        static void EjemploColecciones()
+        {
+            List<int> numeros = new List<int>();
+            numeros.Add(45);
+            numeros.Add(78);
+            foreach(int num in numeros)
+            {
+
+            }
+            List<String> nombres = new List<string>();
+            nombres.Add("Ana");
+            nombres.Add("Adrian");
+            nombres.Add("Lucia");
+            nombres.Add("Ana");
+            //nombres.Remove("Ana");
+            //Console.WriteLine(nombres[1]);
+            nombres.RemoveAt(3);
+            foreach (String name in nombres)
+            {
+                Console.WriteLine(name);
+                
+            }
+
+        }
+        static void EjemploChar(TipoChar tipo)
+        {
+            for (int i = 0; i <= 255; i++)
+            {
+                char letra = (char)i;
+                if (tipo == TipoChar.Simbolos)
+                {
+                    if (char.IsSymbol(letra))
+                    {
+                        Console.WriteLine(letra);
+                    }
+                }
+                else if (tipo == TipoChar.Letras)
+                {
+                    if (char.IsLetter(letra))
+                    {
+                        Console.WriteLine(letra);
+                    }
+                }
+                else if (tipo == TipoChar.Numeros)
+                {
+                    if (char.IsNumber(letra))
+                    {
+                        Console.WriteLine(letra);
+                    }
+                }
+            }
+        }
+        static void InvertirTextoStringBuilder(String datos)
+        {
+            //Queremos medir rendimiento
+            Stopwatch krono = new Stopwatch();
+            krono.Start();
+            StringBuilder texto = new StringBuilder();
+            texto.Append(datos);
+            for (int i = 0; i < texto.Length; i++)
+            {
+                char letra = texto[texto.Length - 1];
+                texto = texto.Remove(texto.Length - 1, 1);
+                texto = texto.Insert(i, letra.ToString());
+            }
+
+            Console.WriteLine("--------------------------------");
+            krono.Stop();
+            Console.WriteLine(texto);
+            Console.WriteLine("---------------TIEMPO-------------------------");
+            Console.WriteLine("Milisegundos; " + krono.ElapsedMilliseconds);
+            
+
+            } 
+        static void InvertirTextoString(String texto)
+        {
+            //Queremos medir rendimiento
+            Stopwatch krono = new Stopwatch();
+            krono.Start();
+            for (int i = 0; i< texto.Length; i++)
+            {
+                char letra = texto[texto.Length - 1];
+                texto = texto.Remove(texto.Length - 1, 1);
+                texto = texto.Insert(i, letra.ToString());
+            }
+
+            Console.WriteLine("--------------------------------");
+            krono.Stop();
+            Console.WriteLine(texto);
+            Console.WriteLine("---------------TIEMPO-------------------------");
+            Console.WriteLine("Milisegundos; " + krono.ElapsedMilliseconds);
+        }
+        static void SumarNumerosString()
+        {
+            Console.WriteLine("Introduzca un texto: ");
+            string texto = Console.ReadLine();
+            int suma = 0;
+            for(var i=0; i<texto.Length; i++)
+            {
+                char caracter = texto[i];
+                // int numero = (int)caracter;
+
+                int numero = int.Parse(caracter.ToString());
+                suma += numero;
+                
+            }
+            Console.WriteLine(suma);
+        }
         static void SumarNumeros()
         {
             Console.WriteLine("Introduzca un numero: ");
